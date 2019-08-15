@@ -1,0 +1,12 @@
+server:
+ servlet:
+   context-path: /osapi-oauth-server
+ port: 13081
+
+spring:
+  profiles:
+    active: dev
+
+logging:
+  level:
+    org.spingframework: DEBUG

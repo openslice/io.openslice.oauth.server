@@ -45,9 +45,9 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
                 .accessTokenValiditySeconds(3600)
                 .redirectUris("http://localhost:8083/","http://localhost:8086/")
                 .and()
-                .withClient("fooClientIdPassword")
-                .secret(passwordEncoder().encode("secret"))
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "client_credentials")
+                .withClient("fooClientIdPassword") // Authorization=Basic Zm9vQ2xpZW50SWRQYXNzd29yZDpzZWNyZXQ=
+                .secret(passwordEncoder().encode("secret")) //Content-Type=application/x-www-form-urlencoded
+                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "client_credentials")//grant_type=password
                 .scopes("foo", "read", "write")
                 .accessTokenValiditySeconds(3600)       // 1 hour
                 .refreshTokenValiditySeconds(2592000)  // 30 days

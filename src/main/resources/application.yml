@@ -4,9 +4,27 @@ server:
  port: 13081
 
 spring:
-  profiles:
-    active: dev
+  profiles: default
+  application:
+    name: openslice-oauth-server
+  datasource:
+    url: jdbc:mysql://localhost/osdb?createDatabaseIfNotExist=true
+    password: letmein0
+    username: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    generate-ddl: true
+    properties.hibernate.current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+
 
 logging:
   level:
-    org.spingframework: DEBUG
+    root: INFO
+    org.springframework: INFO
+    org.apache.camel: INFO 
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+    file: "%d %p %c{1.} [%t] %m%n"

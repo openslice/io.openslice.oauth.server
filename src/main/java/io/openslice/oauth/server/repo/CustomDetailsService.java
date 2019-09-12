@@ -34,7 +34,6 @@ public class CustomDetailsService implements UserDetailsService {
 					GrantedAuthority grantedAuthority = new SimpleGrantedAuthority( rt.getValue() );
 					grantedAuthoritiesList.add(grantedAuthority);
 				}
-				
 				userEntity.setGrantedAuthoritiesList(grantedAuthoritiesList);				
 			} else {
 				throw new UsernameNotFoundException("User " + username + " was not found in the database");				

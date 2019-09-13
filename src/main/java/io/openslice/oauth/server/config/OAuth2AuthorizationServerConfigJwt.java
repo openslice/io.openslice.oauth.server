@@ -60,11 +60,11 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
                 .accessTokenValiditySeconds(3600)       // 1 hour
                 .refreshTokenValiditySeconds(2592000)  // 30 days
                 .and()
-                .withClient("testImplicitClientId")
-                .authorizedGrantTypes("implicit")
-                .scopes("read", "write", "foo", "bar")
-                .autoApprove(true)
-                .redirectUris("http://www.example.com");
+                .withClient("authClientId") //Basic YXV0aENsaWVudElkOnNlY3JldA==
+                .secret(passwordEncoder().encode("secret"))
+                .authorizedGrantTypes("authorization_code")
+                .scopes("foo", "read", "write")
+                .redirectUris("http://localhost:8089/");
     } // @formatter:on
 
     @Bean

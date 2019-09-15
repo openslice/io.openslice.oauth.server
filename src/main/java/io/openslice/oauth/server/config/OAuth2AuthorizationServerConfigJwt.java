@@ -48,10 +48,10 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
                 .withClient("fooClientIdPassword") // Authorization=Basic Zm9vQ2xpZW50SWRQYXNzd29yZDpzZWNyZXQ=
                 .secret(passwordEncoder().encode("secret")) //Content-Type=application/x-www-form-urlencoded
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token", "client_credentials")//grant_type=password
-                .scopes("all", "read", "write")
+                .scopes("openapi","admin", "read", "write")
                 .accessTokenValiditySeconds(3600)       // 1 hour
                 .refreshTokenValiditySeconds(2592000)  // 30 days
-                .redirectUris("http://www.example.com","http://localhost:8089/","http://localhost:8080/login/oauth2/code/custom")
+                .redirectUris("http://www.example.com","http://localhost:13000/","http://localhost:8080/login/oauth2/code/custom", "http://localhost:13000/osapi/webjars/springfox-swagger-ui/oauth2-redirect.html")
                 .and()
                 .withClient("barClientIdPassword")
                 .secret(passwordEncoder().encode("secret"))

@@ -1,5 +1,7 @@
 package io.openslice.oauth.server.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +11,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import io.openslice.oauth.server.repo.CustomDetailsService;
 
@@ -43,10 +48,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		// @formatter:off
-		http.authorizeRequests().antMatchers("/login").permitAll().antMatchers("/oauth/token/revokeById/**").permitAll()
-				.antMatchers("/tokens/**").permitAll().anyRequest().authenticated().and().formLogin().permitAll().and()
-				.csrf().disable();
+		http.authorizeRequests()
+		.antMatchers("/login").permitAll()
+		.antMatchers("/oauth/token/revokeById/**").permitAll()
+		.antMatchers("/tokens/**").permitAll()
+//		.antMatchers("/oauth/token/**").permitAll()
+//		.antMatchers("/oauth/token").permitAll()
+		.anyRequest().authenticated()
+		//.and().formLogin().permitAll()
+		.and().csrf().disable()
+		//.cors().and().csrf().disable()
+		;
 		// @formatter:on
 	}
+	
+
+//	 @Bean
+//	    CorsConfigurationSource corsConfigurationSource() {
+//	        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//	        CorsConfiguration corsConfiguration = new CorsConfiguration();
+//	        corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
+//	        corsConfiguration.setAllowedMethods(Arrays.asList("*"));
+//	        corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
+//	        corsConfiguration.setAllowCredentials(true);
+//	        corsConfiguration.setMaxAge(1800L);
+//	        source.registerCorsConfiguration("/**", corsConfiguration); // restrict path here
+//	        return source;
+//	 }
 
 }

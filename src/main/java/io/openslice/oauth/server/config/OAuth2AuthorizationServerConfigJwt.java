@@ -37,37 +37,20 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
 
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception { // @formatter:off
-        clients.inMemory()
-                .withClient("sampleClientId")
-                .authorizedGrantTypes("implicit")
-                .scopes("read", "write", "foo", "bar")
-                .autoApprove(false)
-                .accessTokenValiditySeconds(3600)
-                .redirectUris("http://localhost:8083/","http://localhost:8086/")
-                .and()
-                .withClient("fooClientIdPassword") // Authorization=Basic Zm9vQ2xpZW50SWRQYXNzd29yZDpzZWNyZXQ=
+        clients. inMemory()
+                
+                .withClient("osapiWebClientId") // Authorization=Basic b3NhcGlXZWJDbGllbnRJZDpzZWNyZXQ=
                 .secret(passwordEncoder().encode("secret")) //Content-Type=application/x-www-form-urlencoded
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token", "client_credentials")//grant_type=password
                 .scopes("openapi","admin", "read", "write")
+                .autoApprove( true )
                 .accessTokenValiditySeconds(3600)       // 1 hour
                 .refreshTokenValiditySeconds(2592000)  // 30 days
                 .redirectUris("http://www.example.com",
                 		"http://localhost:13000/osapi/testweb/oauthresp.html",
                 		"http://localhost:8080/login/oauth2/code/custom", 
                 		"http://localhost:13000/osapi/webjars/springfox-swagger-ui/oauth2-redirect.html")
-                .and()
-                .withClient("barClientIdPassword")
-                .secret(passwordEncoder().encode("secret"))
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token")
-                .scopes("bar", "read", "write")
-                .accessTokenValiditySeconds(3600)       // 1 hour
-                .refreshTokenValiditySeconds(2592000)  // 30 days
-                .and()
-                .withClient("authClientId") //Basic YXV0aENsaWVudElkOnNlY3JldA==
-                .secret(passwordEncoder().encode("secret"))
-                .authorizedGrantTypes("authorization_code")
-                .scopes("foo", "read", "write")
-                .redirectUris("http://localhost:8089/");
+                ;
     } // @formatter:on
 
     @Bean

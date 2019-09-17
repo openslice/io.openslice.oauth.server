@@ -52,10 +52,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/login").permitAll()
 		.antMatchers("/oauth/token/revokeById/**").permitAll()
 		.antMatchers("/tokens/**").permitAll()
-//		.antMatchers("/oauth/token/**").permitAll()
-//		.antMatchers("/oauth/token").permitAll()
+		.antMatchers("/oauth/token/**").permitAll()
+		.antMatchers("/oauth/token").permitAll()
 		.anyRequest().authenticated()
-		//.and().formLogin().permitAll()
+		.and().formLogin().permitAll()
 		.and().csrf().disable()
 		//.cors().and().csrf().disable()
 		;

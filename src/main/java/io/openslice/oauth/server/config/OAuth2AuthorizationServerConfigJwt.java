@@ -51,7 +51,10 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
                 .scopes("openapi","admin", "read", "write")
                 .accessTokenValiditySeconds(3600)       // 1 hour
                 .refreshTokenValiditySeconds(2592000)  // 30 days
-                .redirectUris("http://www.example.com","http://localhost:13000/","http://localhost:8080/login/oauth2/code/custom", "http://localhost:13000/osapi/webjars/springfox-swagger-ui/oauth2-redirect.html")
+                .redirectUris("http://www.example.com",
+                		"http://localhost:13000/osapi/testweb/oauthresp.html",
+                		"http://localhost:8080/login/oauth2/code/custom", 
+                		"http://localhost:13000/osapi/webjars/springfox-swagger-ui/oauth2-redirect.html")
                 .and()
                 .withClient("barClientIdPassword")
                 .secret(passwordEncoder().encode("secret"))

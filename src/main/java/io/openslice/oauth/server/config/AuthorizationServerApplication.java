@@ -3,9 +3,13 @@ package io.openslice.oauth.server.config;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 
 /**
  * based on
@@ -18,10 +22,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @SpringBootApplication(scanBasePackages = "io.openslice")
 @EnableAuthorizationServer
 @EnableJpaRepositories("io.openslice.oauth.server.repo") 
+@EnableConfigurationProperties( ClientConfigProperties.class )
 public class AuthorizationServerApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(AuthorizationServerApplication.class, args);
     }
-
+    
+  
 }

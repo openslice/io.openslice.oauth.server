@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -22,6 +21,8 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import io.openslice.oauth.server.repo.CustomClientDetailsService;
+
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfigurerAdapter {
@@ -29,6 +30,10 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
+    
+
+	@Autowired
+	private CustomClientDetailsService customDetailsService;
 
     @Override
     public void configure(final AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
@@ -37,20 +42,22 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
 
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception { // @formatter:off
-        clients. inMemory()
-                
-                .withClient("osapiWebClientId") // Authorization=Basic b3NhcGlXZWJDbGllbnRJZDpzZWNyZXQ=
-                .secret(passwordEncoder().encode("secret")) //Content-Type=application/x-www-form-urlencoded
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "client_credentials")//grant_type=password
-                .scopes("openapi","admin", "read", "write")
-                .autoApprove( true )
-                .accessTokenValiditySeconds(3600)       // 1 hour
-                .refreshTokenValiditySeconds(2592000)  // 30 days
-                .redirectUris("http://www.example.com",
-                		"http://localhost:13000/osapi/testweb/oauthresp.html",
-                		"http://localhost:8080/login/oauth2/code/custom", 
-                		"http://localhost:13000/osapi/webjars/springfox-swagger-ui/oauth2-redirect.html")
-                ;
+    	clients.withClientDetails( customDetailsService );
+    	
+//        clients.inMemory()
+//                
+//                .withClient("osapiWebClientId") // Authorization=Basic b3NhcGlXZWJDbGllbnRJZDpzZWNyZXQ=
+//                .secret(passwordEncoder().encode("secret")) //Content-Type=application/x-www-form-urlencoded
+//                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "client_credentials")//grant_type=password
+//                .scopes("openapi","admin", "read", "write")
+//                .autoApprove( true )
+//                .accessTokenValiditySeconds(3600)       // 1 hour
+//                .refreshTokenValiditySeconds(2592000)  // 30 days
+//                .redirectUris("http://www.example.com",
+//                		"http://localhost:13000/osapi/testweb/oauthresp.html",
+//                		"http://localhost:8080/login/oauth2/code/custom", 
+//                		"http://localhost:13000/osapi/webjars/springfox-swagger-ui/oauth2-redirect.html")
+//                ;
     } // @formatter:on
 
     @Bean
@@ -88,8 +95,4 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
         return new CustomTokenEnhancer();
     }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }

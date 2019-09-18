@@ -28,3 +28,46 @@ logging:
   pattern:
     console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
     file: "%d %p %c{1.} [%t] %m%n"
+    
+    
+authclients:
+  allowOrigins: 
+  - "http://localhost:13000"
+  clients:
+    osapiWebClientId:
+      clientId: "osapiWebClientId"
+      tokenSecret: "secret"
+      tokenExpirationsec: 3600
+      scopes:
+      - "openapi"
+      - "admin"
+      - "read"
+      - "write"
+      grantTypes:
+      - "authorization_code"
+      - "password"
+      - "refresh_token"
+      - "client_credentials"
+      redirectUris:
+      - "http://localhost:13000/osapi/webjars/springfox-swagger-ui/oauth2-redirect.html"
+      - "http://localhost:13000/osapi/testweb/oauthresp.html"
+    osapiWebClientIdOut:
+      clientId: "osapiWebClientIdOut"
+      tokenSecret: "secret"
+      tokenExpirationsec: 3600
+      allowOrigins: 
+      - "http://localhost:13000"
+      scopes:
+      - "openapi"
+      - "admin"
+      - "read"
+      - "write"
+      grantTypes:
+      - "authorization_code"
+      - "password"
+      - "refresh_token"
+      - "client_credentials"
+      redirectUris:
+      - "http://localhost:13000/osapi/webjars/springfox-swagger-ui/oauth2-redirect.html"
+      - "http://localhost:13000/osapi/testweb/oauthresp.html"
+

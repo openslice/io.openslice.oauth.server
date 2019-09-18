@@ -1,23 +1,31 @@
 package io.openslice.oauth.server.config;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import io.openslice.oauth.server.repo.CustomDetailsService;
 
 @Configuration
+@EnableWebSecurity
+
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+
+@Order(1)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -25,6 +33,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	
+
+	@Autowired
+	private ClientConfigProperties ccp;
 
 	@Autowired
     public void globalUserDetails(final AuthenticationManagerBuilder auth) throws Exception {
@@ -44,36 +56,55 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
+	
+    @Override
+
+    public void configure( WebSecurity web ) throws Exception {
+        web
+        .ignoring()
+        .antMatchers( HttpMethod.OPTIONS, "/**" )
+        .antMatchers( HttpMethod.DELETE, "/**" );
+    }
 
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		// @formatter:off
-		http.authorizeRequests()
+		http
+		.authorizeRequests()
 		.antMatchers("/login").permitAll()
 		.antMatchers("/oauth/token/revokeById/**").permitAll()
 		.antMatchers("/tokens/**").permitAll()
+		.antMatchers("/oauth/**").permitAll()
 		.antMatchers("/oauth/token/**").permitAll()
 		.antMatchers("/oauth/token").permitAll()
 		.anyRequest().authenticated()
 		.and().formLogin().permitAll()
 		.and().csrf().disable()
-		//.cors().and().csrf().disable()
+
+//		.cors().and().csrf().disable()
+		
 		;
 		// @formatter:on
 	}
 	
+	@Bean
+	public FilterRegistrationBean corsFilter() {
 
-//	 @Bean
-//	    CorsConfigurationSource corsConfigurationSource() {
-//	        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//	        CorsConfiguration corsConfiguration = new CorsConfiguration();
-//	        corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
-//	        corsConfiguration.setAllowedMethods(Arrays.asList("*"));
-//	        corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
-//	        corsConfiguration.setAllowCredentials(true);
-//	        corsConfiguration.setMaxAge(1800L);
-//	        source.registerCorsConfiguration("/**", corsConfiguration); // restrict path here
-//	        return source;
-//	 }
+	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	    CorsConfiguration config = new CorsConfiguration();
+	    config.setAllowCredentials(true);
+	    config.addAllowedOrigin("*");
+	    config.addAllowedHeader("*");
+	    config.addAllowedMethod("*");
+	    source.registerCorsConfiguration("/**", config);
+	    FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+
+	    bean.setOrder(0);
+
+	    return bean;
+
+	}
+	
+
 
 }

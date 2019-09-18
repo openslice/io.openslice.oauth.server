@@ -9,14 +9,38 @@ import java.util.Set;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+
 @ConfigurationProperties(prefix = "authclients")
 public class ClientConfigProperties {
 	
-	
-//	public static void main(String[] args) throws JsonProcessingException {
+//	private static class Authclients {
+//		ClientConfigProperties authclients = new ClientConfigProperties();
+//
+//		/**
+//		 * @return the authclients
+//		 */
+//		public ClientConfigProperties getAuthclients() {
+//			return authclients;
+//		}
+//
+//		/**
+//		 * @param authclients the authclients to set
+//		 */
+//		public void setAuthclients(ClientConfigProperties authclients) {
+//			this.authclients = authclients;
+//		}
 //		
 //		
-//		ClientConfigProperties cp = new ClientConfigProperties();
+//	}
+//	
+//	public static void main(String[] args) throws JsonProcessingException  {
+//		
+//		
+//		Authclients ac = new Authclients();
+//		ClientConfigProperties cp = ac.getAuthclients();
 //		
 //		Client e = new Client();
 //		e.setClientId("osapiWebClientId");
@@ -39,8 +63,9 @@ public class ClientConfigProperties {
 //		e.setClientId("osapiWebClientId2");
 //		cp.getClients().put( e.getClientId() , e); 
 //		
+//		cp.getAllowOrigins().add("http://origon.org");
 //		 ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-//		 System.out.println ( mapper.writeValueAsString( cp ) );
+//		 System.out.println ( mapper.writeValueAsString( ac ) );
 //		 
 //	}
 	

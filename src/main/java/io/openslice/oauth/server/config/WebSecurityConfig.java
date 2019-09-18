@@ -77,6 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/oauth/**").permitAll()
 		.antMatchers("/oauth/token/**").permitAll()
 		.antMatchers("/oauth/token").permitAll()
+		.antMatchers("/actuator/**").permitAll()
 		.anyRequest().authenticated()
 		.and().formLogin().permitAll()
 		.and().csrf().disable()

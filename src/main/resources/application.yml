@@ -18,6 +18,23 @@ spring:
     show-sql: false
     generate-ddl: true
     properties.hibernate.current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+  cloud:
+    consul:
+      enabled: true
+      host: http://localhost:8500
+      port: 8500
+      config:
+        enabled: true
+        prefix: config
+        defaultContext: openslice
+        data-key: osdata
+        profileSeparator: '::'
+        format: yaml        
+      discovery:
+        tags: openslice-microservice
+        enabled: true
+        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+        healthCheckInterval: 120s
 
 
 logging:

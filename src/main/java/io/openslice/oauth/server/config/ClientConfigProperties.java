@@ -9,44 +9,40 @@ import java.util.Set;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-
 @ConfigurationProperties(prefix = "authclients")
 public class ClientConfigProperties {
 	
 	
-	public static void main(String[] args) throws JsonProcessingException {
-		
-		
-		ClientConfigProperties cp = new ClientConfigProperties();
-		
-		Client e = new Client();
-		e.setClientId("osapiWebClientId");
-		e.setTokenSecret( "secret" );
-		e.setTokenExpirationsec(3600);
-		e.getScopes().add( "openapi" );
-		e.getScopes().add( "admin");
-		e.getScopes().add( "read");
-		e.getScopes().add( "write" );
-
-		e.getGrantTypes().add( "authorization_code" );
-		e.getGrantTypes().add( "password" );
-		e.getGrantTypes().add( "refresh_token" );
-		e.getGrantTypes().add( "client_credentials" ); 
-
-		e.getRedirectUris().add("http://localhost:13000/osapi/testweb/oauthresp.html" );
-		e.getRedirectUris().add( "http://localhost:13000/osapi/webjars/springfox-swagger-ui/oauth2-redirect.html" );
-		cp.getClients().put( e.getClientId() , e);		
-
-		e.setClientId("osapiWebClientId2");
-		cp.getClients().put( e.getClientId() , e); 
-		
-		 ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-		 System.out.println ( mapper.writeValueAsString( cp ) );
-		 
-	}
+//	public static void main(String[] args) throws JsonProcessingException {
+//		
+//		
+//		ClientConfigProperties cp = new ClientConfigProperties();
+//		
+//		Client e = new Client();
+//		e.setClientId("osapiWebClientId");
+//		e.setTokenSecret( "secret" );
+//		e.setTokenExpirationsec(3600);
+//		e.getScopes().add( "openapi" );
+//		e.getScopes().add( "admin");
+//		e.getScopes().add( "read");
+//		e.getScopes().add( "write" );
+//
+//		e.getGrantTypes().add( "authorization_code" );
+//		e.getGrantTypes().add( "password" );
+//		e.getGrantTypes().add( "refresh_token" );
+//		e.getGrantTypes().add( "client_credentials" ); 
+//
+//		e.getRedirectUris().add("http://localhost:13000/osapi/testweb/oauthresp.html" );
+//		e.getRedirectUris().add( "http://localhost:13000/osapi/webjars/springfox-swagger-ui/oauth2-redirect.html" );
+//		cp.getClients().put( e.getClientId() , e);		
+//
+//		e.setClientId("osapiWebClientId2");
+//		cp.getClients().put( e.getClientId() , e); 
+//		
+//		 ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+//		 System.out.println ( mapper.writeValueAsString( cp ) );
+//		 
+//	}
 	
 	
 

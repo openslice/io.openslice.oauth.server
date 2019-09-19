@@ -15,6 +15,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * based on
  * https://www.baeldung.com/rest-api-spring-oauth2-angular 
  * https://www.tutorialspoint.com/spring_boot/spring_boot_oauth2_with_jwt.htm
+ * https://www.baeldung.com/spring-security-5-oauth2-login
+ * https://developer.okta.com/blog/2019/05/15/spring-boot-login-options
  * @author ctranoris
  *
  */

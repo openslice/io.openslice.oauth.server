@@ -30,20 +30,17 @@ public class CustomClientDetailsService implements ClientDetailsService{
 	@Override
 	public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
 		
-		
-		Client client = ccp.getClients().get( clientId );
-		
-
-		
-			ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-			 try {
-				System.out.println ( mapper.writeValueAsString( ccp ) );
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				
+//			ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+//			 try {
+//				System.out.println ( mapper.writeValueAsString( ccp ) );
+//			} catch (JsonProcessingException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			
-		
+
+		Client client = ccp.getClients().get( clientId );
 		if ( client != null ) {
 			logger.info( "client (" + clientId + ") = "  + client.toString());
 			BaseClientDetails cd = new  BaseClientDetails();

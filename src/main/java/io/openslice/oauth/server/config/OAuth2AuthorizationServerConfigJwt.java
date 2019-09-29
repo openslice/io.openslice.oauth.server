@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -27,7 +28,12 @@ import io.openslice.oauth.server.repo.CustomClientDetailsService;
 @EnableAuthorizationServer
 public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
+
+	@Value("${oauthsign.key}")
+    private String SIGNING_KEY = null;
+
+
+	@Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
     
@@ -84,7 +90,7 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("123");
+        converter.setSigningKey( SIGNING_KEY);
         // final KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("mytest.jks"), "mypass".toCharArray());
         // converter.setKeyPair(keyStoreKeyFactory.getKeyPair("mytest"));
         return converter;

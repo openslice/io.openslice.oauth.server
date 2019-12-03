@@ -100,6 +100,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.anyRequest().authenticated()
 		.and().formLogin().permitAll()
 		.and().csrf().disable()
+		.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll()
 
 //		.cors().and().csrf().disable()
 		

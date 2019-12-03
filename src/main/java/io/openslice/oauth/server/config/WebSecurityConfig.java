@@ -19,6 +19,8 @@
  */
 package io.openslice.oauth.server.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -115,11 +117,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 	    CorsConfiguration config = new CorsConfiguration();
-	    config.setAllowCredentials(true);
-	    config.addAllowedOrigin("*");
-	    config.addAllowedHeader("*");
-	    config.addAllowedMethod("*");
-	    source.registerCorsConfiguration("/**", config);
+	    config.applyPermitDefaultValues();
+        config.setAllowCredentials(true);
+        config.setAllowedOrigins(Arrays.asList("*"));
+        config.setAllowedHeaders(Arrays.asList("*"));
+        config.setAllowedMethods(Arrays.asList("*"));
+        config.setExposedHeaders(Arrays.asList("content-length"));
+        config.setMaxAge(3600L);
+        source.registerCorsConfiguration("/**", config);
 	    FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
 
 	    bean.setOrder(0);

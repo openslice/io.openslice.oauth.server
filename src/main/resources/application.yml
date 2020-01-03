@@ -54,7 +54,7 @@ authclients:
     osapiWebClientId:
       clientId: "osapiWebClientId"
       tokenSecret: "secret"
-      tokenExpirationsec: 3600
+      tokenExpirationsec: 36000
       scopes:
       - "openapi"
       - "admin"
@@ -71,7 +71,7 @@ authclients:
     osapiWebClientIdOut:
       clientId: "osapiWebClientIdOut"
       tokenSecret: "secret"
-      tokenExpirationsec: 3600
+      tokenExpirationsec: 36000
       allowOrigins: 
       - "http://localhost:13000"
       scopes:

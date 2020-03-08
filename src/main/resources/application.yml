@@ -9,7 +9,7 @@ spring:
     name: openslice-oauth-server
   datasource:
     url: jdbc:mysql://localhost/osdb?createDatabaseIfNotExist=true
-    password: letmein0
+    password: letmein
     username: root
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
